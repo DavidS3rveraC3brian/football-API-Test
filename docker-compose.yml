@@ -1,0 +1,89 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:latest
+    restart: always
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: league
+      MYSQL_USER: david
+      MYSQL_PASSWORD: secret
+      
+    ports:
+      - "13307:3306"
+
+  api:
+    image: sampleapi
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    command: sh -c "sleep 20 && java -jar app.jar"
+   
+  tests:
+    image: functional-tests
+    build:
+      context: .
+      dockerfile: tests/Dockerfile
+    entrypoint: ["newman"]  # Cambiado a entrypoint
+    command: ["run", "/target/football_8080.postman_collection.json", "--environment=/target/Football-API-environment.postman_environment.json", "--env-var=BaseUrl2=http://localhost:8080/football", "--reporters", "cli,json,junit", "--reporter-junit-export", "/data/results/TEST-Integration-Report.xml", "--reporter-json-export", "/data/results/outputfile.json"]
+    volumes:
+      - results:/data/results
+    depends_on:
+      - api
+      
+volumes:
+  results:
+
+#version: '3'
+#
+#services:
+#  db:
+#    image: mysql:latest
+#    restart: always
+#    container_name: db
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+#      MYSQL_DATABASE: ${DB_NAME:-league}
+#      MYSQL_USER: ${DB_USER:-david}
+#      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+#    ports:
+#      - "13307:3306"
+#
+#  api:
+#    image: sampleapi
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    container_name: api
+#    ports:
+#      - "8080:8080"
+#    depends_on:
+#      - db
+#    healthcheck:
+#      test: ["CMD", "curl", "--fail", "http://localhost:8080/actuator/health"]
+#      interval: 10s
+#      timeout: 5s
+#      retries: 5
+#    command: java -jar app.jar
+#
+#  tests:
+#    image: functional-tests
+#    build:
+#      context: .
+#      dockerfile: tests/Dockerfile
+#    entrypoint: newman
+#    command: run tests/football.postman_collection.json --environment=tests/Football-API-environment.postman_environment.json --env-var="BaseUrl2=http://api:8080/football" --reporters cli,json,junit --reporter-junit-export /data/results/TEST-Integration-Report.xml --reporter-json-export /data/results/outputfile.json
+#    volumes:
+#      - results:/data/results
+#    depends_on:
+#      - api
+#
+#volumes:
+#  results:

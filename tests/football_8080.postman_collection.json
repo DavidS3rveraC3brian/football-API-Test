@@ -1,0 +1,245 @@
+{
+	"info": {
+		"_postman_id": "87561e5e-82d6-41c0-99d5-8501d628a788",
+		"name": "football_8080",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29839977"
+	},
+	"item": [
+		{
+			"name": "Player_Controller",
+			"item": [
+				{
+					"name": "getAllPlayer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl2}}/player",
+							"host": [
+								"{{BaseUrl2}}"
+							],
+							"path": [
+								"player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlayerById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.test(\"Status code name has string\", function () {\r",
+									"        pm.response.to.have.status(\"OK\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl2}}/player/1",
+							"host": [
+								"{{BaseUrl2}}"
+							],
+							"path": [
+								"player",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPlayerByName",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.test(\"Status code name has string\", function () {\r",
+									"        pm.response.to.have.status(\"OK\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl2}}/player/search-by-name/pepe",
+							"host": [
+								"{{BaseUrl2}}"
+							],
+							"path": [
+								"player",
+								"search-by-name",
+								"pepe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createBatchPlayer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl2}}/player",
+							"host": [
+								"{{BaseUrl2}}"
+							],
+							"path": [
+								"player"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePlayer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.test(\"Status code name has string\", function () {\r",
+									"        pm.response.to.have.status(\"Bad Request\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseUrl2}}/player/1",
+							"host": [
+								"{{BaseUrl2}}"
+							],
+							"path": [
+								"player",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePlayer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"Internal Server Error\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseUrl2}}/player/4",
+							"host": [
+								"{{BaseUrl2}}"
+							],
+							"path": [
+								"player",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
